@@ -38,4 +38,7 @@ var (
 
 	// TCP multiplexer
 	HTTPConnectTCPMultiplexer string = "httpconnect"
+
+	// Wireguard Protocol Name
+	WireguardProtocol = "wg"
 )

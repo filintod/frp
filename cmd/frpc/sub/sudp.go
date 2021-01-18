@@ -37,6 +37,7 @@ func init() {
 	sudpCmd.PersistentFlags().IntVarP(&bindPort, "bind_port", "", 0, "bind port")
 	sudpCmd.PersistentFlags().BoolVarP(&useEncryption, "ue", "", false, "use encryption")
 	sudpCmd.PersistentFlags().BoolVarP(&useCompression, "uc", "", false, "use compression")
+	tcpCmd.PersistentFlags().BoolVarP(&wgTunnel, "wg", "", false, "use wireguard")
 
 	rootCmd.AddCommand(sudpCmd)
 }

@@ -35,6 +35,7 @@ func init() {
 	httpsCmd.PersistentFlags().StringVarP(&subDomain, "sd", "", "", "sub domain")
 	httpsCmd.PersistentFlags().BoolVarP(&useEncryption, "ue", "", false, "use encryption")
 	httpsCmd.PersistentFlags().BoolVarP(&useCompression, "uc", "", false, "use compression")
+	tcpCmd.PersistentFlags().BoolVarP(&wgTunnel, "wg", "", false, "use wireguard")
 
 	rootCmd.AddCommand(httpsCmd)
 }

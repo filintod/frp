@@ -16,6 +16,7 @@ package config
 
 import (
 	"fmt"
+	"github.com/fatedier/frp/pkg/consts"
 	"os"
 	"strconv"
 	"strings"
@@ -100,7 +101,7 @@ type ClientCommonConf struct {
 	// set.
 	Start map[string]struct{} `json:"start"`
 	// Protocol specifies the protocol to use when interacting with the server.
-	// Valid values are "tcp", "kcp" and "websocket". By default, this value
+	// Valid values are "tcp", "kcp", "wg" and "websocket". By default, this value
 	// is "tcp".
 	Protocol string `json:"protocol"`
 	// TLSEnable specifies whether or not TLS should be used when communicating
@@ -282,7 +283,7 @@ func UnmarshalClientConfFromIni(content string) (cfg ClientCommonConf, err error
 
 	if tmpStr, ok = conf.Get("common", "protocol"); ok {
 		// Now it only support tcp and kcp and websocket.
-		if tmpStr != "tcp" && tmpStr != "kcp" && tmpStr != "websocket" {
+		if tmpStr != "tcp" && tmpStr != "kcp" && tmpStr != "websocket" && tmpStr != consts.WireguardProtocol {
 			err = fmt.Errorf("Parse conf error: invalid protocol")
 			return
 		}

@@ -19,6 +19,7 @@ import (
 	"crypto/tls"
 	"errors"
 	"fmt"
+	"github.com/fatedier/frp/pkg/consts"
 	"io"
 	"net"
 	"sync/atomic"
@@ -223,6 +224,8 @@ func ConnectServerByProxy(proxyURL string, protocol string, addr string) (c net.
 		return ConnectServer(protocol, addr)
 	case "websocket":
 		return ConnectWebsocketServer(addr)
+	case consts.WireguardProtocol:
+		return ConnectWireguardServer(addr)
 	default:
 		return nil, fmt.Errorf("unsupport protocol: %s", protocol)
 	}

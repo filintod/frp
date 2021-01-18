@@ -17,6 +17,7 @@ package sub
 import (
 	"context"
 	"fmt"
+	"github.com/fatedier/frp/pkg/consts"
 	"net"
 	"os"
 	"os/signal"
@@ -74,6 +75,8 @@ var (
 	tlsEnable bool
 
 	kcpDoneCh chan struct{}
+
+	wgTunnel bool
 )
 
 func init() {
@@ -186,6 +189,10 @@ func parseClientCommonCfgFromCmd() (cfg config.ClientCommonConf, err error) {
 	cfg.ClientConfig = auth.GetDefaultClientConf()
 	cfg.Token = token
 	cfg.TLSEnable = tlsEnable
+
+	if wgTunnel {
+		cfg.Protocol = consts.WireguardProtocol
+	}
 
 	return
 }

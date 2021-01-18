@@ -39,6 +39,7 @@ func init() {
 	httpCmd.PersistentFlags().StringVarP(&hostHeaderRewrite, "host_header_rewrite", "", "", "host header rewrite")
 	httpCmd.PersistentFlags().BoolVarP(&useEncryption, "ue", "", false, "use encryption")
 	httpCmd.PersistentFlags().BoolVarP(&useCompression, "uc", "", false, "use compression")
+	tcpCmd.PersistentFlags().BoolVarP(&wgTunnel, "wg", "", false, "use wireguard")
 
 	rootCmd.AddCommand(httpCmd)
 }

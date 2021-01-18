@@ -33,6 +33,7 @@ func init() {
 	tcpCmd.PersistentFlags().IntVarP(&remotePort, "remote_port", "r", 0, "remote port")
 	tcpCmd.PersistentFlags().BoolVarP(&useEncryption, "ue", "", false, "use encryption")
 	tcpCmd.PersistentFlags().BoolVarP(&useCompression, "uc", "", false, "use compression")
+	tcpCmd.PersistentFlags().BoolVarP(&wgTunnel, "wg", "", false, "use wireguard")
 
 	rootCmd.AddCommand(tcpCmd)
 }

@@ -37,6 +37,7 @@ func init() {
 	xtcpCmd.PersistentFlags().IntVarP(&bindPort, "bind_port", "", 0, "bind port")
 	xtcpCmd.PersistentFlags().BoolVarP(&useEncryption, "ue", "", false, "use encryption")
 	xtcpCmd.PersistentFlags().BoolVarP(&useCompression, "uc", "", false, "use compression")
+	tcpCmd.PersistentFlags().BoolVarP(&wgTunnel, "wg", "", false, "use wireguard")
 
 	rootCmd.AddCommand(xtcpCmd)
 }
