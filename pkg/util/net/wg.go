@@ -1,6 +1,7 @@
 package net
 
 import (
+	"context"
 	"fmt"
 	"golang.zx2c4.com/wireguard/device"
 	"golang.zx2c4.com/wireguard/tun"
@@ -28,5 +29,5 @@ func ConnectWireguardServer(localTunnelAddr string, addr string, dnsServer strin
 	}
 	dev.Up()
 
-	return tnet.Dial("tcp", addr)
+	return tnet.DialContext(context.Background(), "tcp", addr)
 }
