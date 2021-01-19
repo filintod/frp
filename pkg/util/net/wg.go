@@ -20,14 +20,13 @@ func ConnectWireguardServer(localTunnelAddr string, addr string, dnsServer strin
 	l := device.NewLogger(device.LogLevelInfo, "wg")
 	dev := device.NewDevice(tun, l)
 	if err = dev.IpcSet(fmt.Sprintf(
-		"private_key=%s\n" +
-    			"public_key=%s\n" +
-    			"endpoint=%s\n" +
-    			"allowed_ip=0.0.0.0/0", privateKey, wgPublicKey, wgAddress));  err != nil {
+		"private_key=%s\n"+
+			"public_key=%s\n"+
+			"endpoint=%s\n"+
+			"allowed_ip=0.0.0.0/0", privateKey, wgPublicKey, wgAddress)); err != nil {
 		log.Panic(err)
 	}
 	dev.Up()
 
 	return tnet.Dial("tcp", addr)
 }
-
