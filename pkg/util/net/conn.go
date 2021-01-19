@@ -22,6 +22,8 @@ import (
 	"github.com/fatedier/frp/pkg/consts"
 	"io"
 	"net"
+	"os"
+	"strconv"
 	"sync/atomic"
 	"time"
 
@@ -225,7 +227,22 @@ func ConnectServerByProxy(proxyURL string, protocol string, addr string) (c net.
 	case "websocket":
 		return ConnectWebsocketServer(addr)
 	case consts.WireguardProtocol:
-		return ConnectWireguardServer(addr)
+		// TODO: this vars are temporary
+		privateKey, o1 := os.LookupEnv("PRIVATE_KEY")
+		localTunnerAddr, o2 := os.LookupEnv("LOCAL_TUNNEL_ADDR")
+		wgPublicKey, o3 := os.LookupEnv("WG_PUBLIC_KEY")
+		wgAddress, o4 := os.LookupEnv("WG_SERVER_ADDRESS")
+		wgDns, o5 := os.LookupEnv("WG_DNS_ADDRESS")
+		mtus, _ := os.LookupEnv("WG_MTU")
+		mtu, err := strconv.Atoi(mtus)
+		if err != nil {
+			return nil, err
+		}
+		if !(o1 && o2 && o3 && o4 && o5) {
+			return nil, errors.New("some Wireguard properties not provided")
+		}
+
+		return ConnectWireguardServer(localTunnerAddr, addr, wgDns, mtu, privateKey, wgPublicKey, wgAddress)
 	default:
 		return nil, fmt.Errorf("unsupport protocol: %s", protocol)
 	}
