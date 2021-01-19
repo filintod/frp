@@ -10,7 +10,7 @@ import (
 )
 
 // ConnectWireguardServer dials wireguard address (addr: domain:port)
-func ConnectWireguardServer(localTunnelAddr string, addr string, dnsServer string, mtu int, privateKey string, wgPublicKey string, wgAddress string) (net.Conn, error) {
+func ConnectWireguardServer(localTunnelAddr string, addr string, dnsServer string, mtu int, privateKey string, wgPublicKey string, wgAddress string, ctx context.Context) (net.Conn, error) {
 	tun, tnet, err := tun.CreateNetTUN(
 		[]net.IP{net.ParseIP(localTunnelAddr)},
 		[]net.IP{net.ParseIP(dnsServer)},
@@ -29,5 +29,5 @@ func ConnectWireguardServer(localTunnelAddr string, addr string, dnsServer strin
 	}
 	dev.Up()
 
-	return tnet.DialContext(context.Background(), "tcp", addr)
+	return tnet.DialContext(ctx, "tcp", addr)
 }

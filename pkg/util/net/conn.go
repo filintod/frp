@@ -217,7 +217,7 @@ func ConnectServer(protocol string, addr string) (c net.Conn, err error) {
 	}
 }
 
-func ConnectServerByProxy(proxyURL string, protocol string, addr string) (c net.Conn, err error) {
+func ConnectServerByProxy(proxyURL string, protocol string, addr string, ctx context.Context) (c net.Conn, err error) {
 	switch protocol {
 	case "tcp":
 		return gnet.DialTcpByProxy(proxyURL, addr)
@@ -242,14 +242,14 @@ func ConnectServerByProxy(proxyURL string, protocol string, addr string) (c net.
 			return nil, errors.New("some Wireguard properties not provided")
 		}
 
-		return ConnectWireguardServer(localTunnerAddr, addr, wgDns, mtu, privateKey, wgPublicKey, wgAddress)
+		return ConnectWireguardServer(localTunnerAddr, addr, wgDns, mtu, privateKey, wgPublicKey, wgAddress, ctx)
 	default:
 		return nil, fmt.Errorf("unsupport protocol: %s", protocol)
 	}
 }
 
-func ConnectServerByProxyWithTLS(proxyURL string, protocol string, addr string, tlsConfig *tls.Config) (c net.Conn, err error) {
-	c, err = ConnectServerByProxy(proxyURL, protocol, addr)
+func ConnectServerByProxyWithTLS(proxyURL string, protocol string, addr string, tlsConfig *tls.Config, ctx context.Context) (c net.Conn, err error) {
+	c, err = ConnectServerByProxy(proxyURL, protocol, addr, ctx)
 	if err != nil {
 		return
 	}
